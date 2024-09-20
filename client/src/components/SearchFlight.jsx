@@ -1,40 +1,58 @@
-import React from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import SearchLocation from "./SearchLocation"
-import DatePicker from './DatePicker'
-import { Button } from './ui/button'
+import React from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import SearchLocation from "./SearchLocation";
+import DatePicker from "./DatePicker";
+import { Button } from "./ui/button";
+import { PlaneTakeoffIcon } from "lucide-react";
+import { PlaneTakeoff } from "lucide-react";
+import PlaneLandingSvg from "@/assets/PlaneLandingSvg";
+import PlaneSvg from "@/assets/PlaneSvg";
 const SearchFlight = () => {
   return (
-    <div className='p-4 bg-white-50 w-full h-48 border-2 border-black relative'>
-  
-        <div className='flex flex-col justify-between items-center mb-4'>
-          <div className='flex ml-0 ml-0 self-start p-4'>
-            <img src="" alt="Logo" />
-            <h2>BOOK YOUR FLIGHT</h2>
-          </div>
-          <Tabs defaultValue="round-trip" className="w-[400px]">
-            <TabsList className="absolute right-4 top-4">
-              <TabsTrigger value="round-trip">Round Trip</TabsTrigger>
-              <TabsTrigger value="one-way">One Way</TabsTrigger>
-            </TabsList>
-            {/* TabsContent burada Tabs bileşeninin içinde olmalı */}
-            <TabsContent value="round-trip" className="flex justify-center items-center gap-8">
-              <div className='flex justify-between items-center gap-2'>
-                <SearchLocation />
-                <SearchLocation />
-              </div>
-              <div className='flex justify-between items-center gap-2'>
-                <DatePicker />
-                <DatePicker />
-              </div>
-            </TabsContent>
-            <TabsContent value="one-way">Change your password here.</TabsContent>
-          </Tabs>
+    <div className="relative w-full rounded-xl bg-white shadow-sm sm:h-48">
+      <div className="mb-4 flex flex-col items-center justify-between">
+        <div className="ml-0 flex items-center self-start p-4">
+          <PlaneSvg className="h-6 text-black" />
+          <h2 className="font-bold">BOOK YOUR FLIGHT</h2>
         </div>
-        <Button variant="default" >Show flights</Button>
+        <Tabs defaultValue="round-trip" className="w-[400px]">
+          <TabsList className="absolute right-4 top-4 rounded-full p-0">
+            <TabsTrigger className="h-full rounded-l-full" value="round-trip">
+              Round Trip
+            </TabsTrigger>
+            <TabsTrigger className="h-full rounded-r-full" value="one-way">
+              One Way
+            </TabsTrigger>
+          </TabsList>
+          {/* TabsContent burada Tabs bileşeninin içinde olmalı */}
+          <TabsContent
+            value="round-trip"
+            className="flex items-center justify-center gap-3"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <div className="relative items-center">
+                {/* <PlaneTakeoffIcon className="absolute left-1 top-0 text-violet-900" /> */}
+                <SearchLocation
+                  className="rounded-l-full"
+                  variant="departure"
+                />
+              </div>
+              {/* <PlaneLandingSvg /> */}
+              <SearchLocation className="rounded-r-full" variant="arrival" />
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <DatePicker className="rounded-l-full" />
+              <DatePicker className="rounded-r-full" />
+            </div>
+          </TabsContent>
+          <TabsContent value="one-way">Change your password here.</TabsContent>
+        </Tabs>
+      </div>
+      <Button variant="default" className="absolute bottom-5 left-5">
+        Show flights
+      </Button>
     </div>
-  )
-}
+  );
+};
 
-export default SearchFlight
-
+export default SearchFlight;
