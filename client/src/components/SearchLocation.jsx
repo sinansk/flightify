@@ -49,7 +49,7 @@ const SearchLocation = ({ className, variant }) => {
   const [value, setValue] = React.useState("");
 
   const Icon = () => {
-    const style = "absolute left-1 w-5 text-primary";
+    const style = "absolute left-2 w-5 text-primary";
     if (variant === "departure") {
       return <PlaneTakeoffIcon className={style} />;
     } else if (variant === "arrival") {
@@ -67,7 +67,9 @@ const SearchLocation = ({ className, variant }) => {
           className={cn("relative w-[200px] justify-between", className)}
         >
           {value ? (
-            frameworks.find((framework) => framework.value === value)?.label
+            <span className="ml-4">
+              {frameworks.find((framework) => framework.value === value)?.label}
+            </span>
           ) : (
             <span className="ml-4">Select framework...</span>
           )}
@@ -75,7 +77,7 @@ const SearchLocation = ({ className, variant }) => {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="ml-4 w-[200px] p-0">
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>

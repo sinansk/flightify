@@ -7,7 +7,7 @@ const PlaneSvg = ({ className }) => {
       className={twMerge("h-8 w-8 rotate-90 text-violet-900", className)}
       stroke="currentColor"
       fill="currentColor"
-      stroke-width="0"
+      strokeWidth="0"
       viewBox="0 0 512 512"
       height="64px"
       width="64px"

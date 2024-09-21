@@ -19,7 +19,7 @@ const FlightCard = () => {
           <p>Airport: MXP</p>
         </div>
         <Divider />
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-center">
           <p>Deperture</p>
           <PlaneSvg />
           <p>2h 25m (Nonstop)</p>
@@ -36,7 +36,7 @@ const FlightCard = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
-          <p className="font-bold text-violet-900">PRICE: $200</p>
+          <p className="font-bold text-violet-900">Price: $200</p>
           <p className="text-sm font-semibold">Round Trip</p>
         </div>
         <Button

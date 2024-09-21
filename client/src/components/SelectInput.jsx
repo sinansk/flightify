@@ -20,7 +20,9 @@ export function SelectInput({ className, options }) {
         <SelectGroup>
           <SelectLabel>{options?.label}</SelectLabel>
           {options?.items?.map((item) => (
-            <SelectItem value={item}>{item}</SelectItem>
+            <SelectItem key={item} value={item}>
+              {item}
+            </SelectItem>
           ))}
         </SelectGroup>
       </SelectContent>

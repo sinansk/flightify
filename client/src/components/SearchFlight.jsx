@@ -24,20 +24,17 @@ const SearchFlight = () => {
               One Way
             </TabsTrigger>
           </TabsList>
-          {/* TabsContent burada Tabs bileşeninin içinde olmalı */}
           <TabsContent
             value="round-trip"
             className="flex items-center justify-center gap-3"
           >
             <div className="flex items-center justify-between gap-2">
               <div className="relative items-center">
-                {/* <PlaneTakeoffIcon className="absolute left-1 top-0 text-violet-900" /> */}
                 <SearchLocation
                   className="rounded-l-full"
                   variant="departure"
                 />
               </div>
-              {/* <PlaneLandingSvg /> */}
               <SearchLocation className="rounded-r-full" variant="arrival" />
             </div>
             <div className="flex items-center justify-between gap-2">
@@ -45,7 +42,23 @@ const SearchFlight = () => {
               <DatePicker className="rounded-r-full" />
             </div>
           </TabsContent>
-          <TabsContent value="one-way">Change your password here.</TabsContent>
+          <TabsContent
+            value="one-way"
+            className="flex items-center justify-end gap-3 pl-6"
+          >
+            <div className="flex items-center justify-between gap-2">
+              <div className="relative items-center">
+                <SearchLocation
+                  className="rounded-l-full"
+                  variant="departure"
+                />
+              </div>
+              <SearchLocation className="rounded-r-full" variant="arrival" />
+            </div>
+            <div className="flex items-center justify-start">
+              <DatePicker className="rounded-l-full" />
+            </div>
+          </TabsContent>
         </Tabs>
       </div>
       <Button variant="default" className="absolute bottom-5 left-5">

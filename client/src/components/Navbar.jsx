@@ -14,7 +14,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="w-full bg-gray-100 p-4 text-black">
+    <nav className="ml-auto mr-auto w-[70vw] rounded-t-2xl bg-gray-100 p-4 text-black">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
         {/* Logo */}
         <h1 className="text-xl font-bold">
@@ -30,9 +30,9 @@ const Navbar = () => {
             <NavigationMenuItem className=" ">
               <NavigationMenuTrigger>Joane Smith</NavigationMenuTrigger>
               <NavigationMenuContent>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <Link to="my-flights" className={navigationMenuTriggerStyle()}>
                   My Flights
-                </NavigationMenuLink>
+                </Link>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Logout
                 </NavigationMenuLink>

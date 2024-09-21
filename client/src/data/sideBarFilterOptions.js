@@ -44,4 +44,8 @@ export const airlinesOptions = [
     option: "Air Italy",
     value: "$230",
   },
+  {
+    option: "Siberia",
+    value: "$230",
+  },
 ];
