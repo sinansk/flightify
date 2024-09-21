@@ -15,45 +15,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { PlaneTakeoffIcon } from "lucide-react";
-import { PlaneLandingIcon } from "lucide-react";
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
-
-const SearchLocation = ({ className, variant }) => {
+const SearchInput = ({ className, options, icon }) => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-
-  const Icon = () => {
-    const style = "absolute left-2 w-5 text-primary";
-    if (variant === "departure") {
-      return <PlaneTakeoffIcon className={style} />;
-    } else if (variant === "arrival") {
-      return <PlaneLandingIcon className={style} />;
-    }
-  };
-
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -65,25 +30,25 @@ const SearchLocation = ({ className, variant }) => {
         >
           {value ? (
             <span className="ml-4">
-              {frameworks.find((framework) => framework.value === value)?.label}
+              {options.items.find((item) => item.value === value)?.label}
             </span>
           ) : (
-            <span className="ml-4">Select framework...</span>
+            <span className="ml-4">{options?.label}</span>
           )}
-          <Icon />
+          {icon && icon}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="ml-4 w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder={options?.placeholder} />
           <CommandList>
             <CommandEmpty>Nothing found.</CommandEmpty>
             <CommandGroup>
-              {frameworks.map((framework) => (
+              {options.items.map((item) => (
                 <CommandItem
-                  key={framework.value}
-                  value={framework.value}
+                  key={item.value}
+                  value={item.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue);
                     setOpen(false);
@@ -92,10 +57,10 @@ const SearchLocation = ({ className, variant }) => {
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === framework.value ? "opacity-100" : "opacity-0",
+                      value === item.value ? "opacity-100" : "opacity-0",
                     )}
                   />
-                  {framework.label}
+                  {item.label}
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -106,4 +71,4 @@ const SearchLocation = ({ className, variant }) => {
   );
 };
 
-export default SearchLocation;
+export default SearchInput;

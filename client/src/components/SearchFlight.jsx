@@ -3,9 +3,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SearchLocation from "./SearchLocation";
 import DatePicker from "./DatePicker";
 import { Button } from "./ui/button";
-import { PlaneTakeoffIcon } from "lucide-react";
-import { PlaneTakeoff } from "lucide-react";
-import PlaneLandingSvg from "@/assets/PlaneLandingSvg";
 import PlaneSvg from "@/assets/PlaneSvg";
 const SearchFlight = () => {
   return (
