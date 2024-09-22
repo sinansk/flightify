@@ -4,7 +4,23 @@ import SearchLocation from "./SearchLocation";
 import DatePicker from "./DatePicker";
 import { Button } from "./ui/button";
 import PlaneSvg from "@/assets/PlaneSvg";
+import { getFlights } from "@/services/flightsService";
 const SearchFlight = () => {
+  const formData = {
+    scheduleDate: "2024-09-23",
+    flightDirection: "A",
+    route: "IST",
+  };
+
+  const handleSearch = async () => {
+    try {
+      const data = await getFlights(formData);
+      console.log(data, "response");
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
   return (
     <div className="relative w-full rounded-xl bg-white shadow-sm sm:h-48">
       <div className="mb-4 flex flex-col items-center justify-between">
@@ -58,7 +74,11 @@ const SearchFlight = () => {
           </TabsContent>
         </Tabs>
       </div>
-      <Button variant="default" className="absolute bottom-5 left-5">
+      <Button
+        variant="default"
+        className="absolute bottom-5 left-5"
+        onClick={handleSearch}
+      >
         Show flights
       </Button>
     </div>
