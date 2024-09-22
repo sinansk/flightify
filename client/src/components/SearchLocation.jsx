@@ -1,48 +1,41 @@
-import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import React from "react";
+import {
+  Check,
+  ChevronsUpDown,
+  PlaneLandingIcon,
+  PlaneTakeoffIcon,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
+import { useSelector, useDispatch } from "react-redux";
+import { setDeparture, setArrival } from "../redux/slices/searchFlightSlice"; // Redux actions
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { PlaneTakeoffIcon } from "lucide-react";
-import { PlaneLandingIcon } from "lucide-react";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandItem,
+  CommandGroup,
+} from "@/components/ui/command";
+import { useEffect, useState } from "react";
 
 const SearchLocation = ({ className, variant }) => {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState("");
-
-  const Icon = () => {
-    const style = "absolute left-2 w-5 text-primary";
-    if (variant === "departure") {
-      return <PlaneTakeoffIcon className={style} />;
-    } else if (variant === "arrival") {
-      return <PlaneLandingIcon className={style} />;
-    }
-  };
+  const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [airports, setAirports] = useState([]);
+  const [filteredAirports, setFilteredAirports] = useState([]);
 
   const dispatch = useDispatch();
-
-  const [airports, setAirports] = React.useState([]);
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const [filteredAirports, setFilteredAirports] = React.useState([]);
-
   const departure = useSelector((state) => state.searchFlight.departure);
   const arrival = useSelector((state) => state.searchFlight.arrival);
+  const selectedAirport = variant === "departure" ? departure : arrival;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchAirports = async () => {
       const response = await fetch(
         "https://raw.githubusercontent.com/algolia/datasets/master/airports/airports.json",
@@ -50,23 +43,22 @@ const SearchLocation = ({ className, variant }) => {
       const data = await response.json();
       setAirports(data);
     };
-
     fetchAirports();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (searchTerm.length < 2) {
-      setFilteredAirports([]); // 2 harften azsa boş dizi
+      setFilteredAirports([]);
       return;
     }
 
-    const regex = new RegExp(searchTerm, "i"); // Regex oluşturma
+    const regex = new RegExp(searchTerm, "i");
     const fits = airports.filter(
       (airport) =>
         regex.test(airport.name) ||
         regex.test(airport.city) ||
-        regex.test(airport.country) || // Ülke adı ile arama
-        regex.test(airport.iata_code), // IATA kodu ile arama
+        regex.test(airport.country) ||
+        regex.test(airport.iata_code),
     );
 
     setFilteredAirports(fits);
@@ -81,15 +73,14 @@ const SearchLocation = ({ className, variant }) => {
     setOpen(false);
   };
 
-  const selectedAirport = variant === "departure" ? departure : arrival;
-
-  useEffect(() => {
-    console.log("filtered", filteredAirports);
-  }, [filteredAirports]);
-
-  useEffect(() => {
-    console.log("value", value);
-  }, [value]);
+  const Icon = () => {
+    const style = "absolute left-2 w-5 text-primary";
+    if (variant === "departure") {
+      return <PlaneTakeoffIcon className={style} />;
+    } else if (variant === "arrival") {
+      return <PlaneLandingIcon className={style} />;
+    }
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -100,25 +91,8 @@ const SearchLocation = ({ className, variant }) => {
           aria-expanded={open}
           className={cn("relative w-[200px] justify-between", className)}
         >
-          {/* {value ? (
-            <span className="ml-4">
-              {
-                filteredAirports.find((airport) => airport.iata_code === value)
-                  ?.name
-              }
-              {", "}
-              {
-                filteredAirports.find((airport) => airport.iata_code === value)
-                  ?.city
-              }
-            </span>
-          ) : (
-            <span className="ml-4">Select airport...</span>
-          )} */}
           {selectedAirport ? (
-            <span className="ml-4">
-              {selectedAirport.name}, {selectedAirport.city}
-            </span>
+            <span className="ml-4">{selectedAirport.name}</span>
           ) : (
             <span className="ml-4">Select airport...</span>
           )}
@@ -138,13 +112,14 @@ const SearchLocation = ({ className, variant }) => {
               {filteredAirports.map((airport) => (
                 <CommandItem
                   key={airport.iata_code}
-                  value={airport.iata_code}
                   onSelect={() => handleSelect(airport)}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === airport.iata_code ? "opacity-100" : "opacity-0",
+                      selectedAirport?.iata_code === airport.iata_code
+                        ? "opacity-100"
+                        : "opacity-0",
                     )}
                   />
                   {airport.name} ({airport.iata_code}), {airport.city}

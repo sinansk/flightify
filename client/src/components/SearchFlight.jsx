@@ -5,20 +5,44 @@ import DatePicker from "./DatePicker";
 import { Button } from "./ui/button";
 import PlaneSvg from "@/assets/PlaneSvg";
 import { getFlights } from "@/services/flightsService";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setDepartureDate,
+  setFlightType,
+  setReturnDate,
+} from "@/redux/slices/searchFlightSlice";
+import { fetchFlights } from "../redux/thunks/searchFlightThunks";
 const SearchFlight = () => {
+  const dispatch = useDispatch();
+  const flightType = useSelector((state) => state.searchFlight.flightType);
+  const departureDate = useSelector(
+    (state) => state.searchFlight.departureDate,
+  );
+  const returnDate = useSelector((state) => state.searchFlight.returnDate);
+  const flightDirection = useSelector(
+    (state) => state.searchFlight.flightDirection,
+  );
+  const route = useSelector((state) => state.searchFlight.route);
   const formData = {
-    scheduleDate: "2024-09-23",
-    flightDirection: "A",
-    route: "IST",
+    scheduleDate: departureDate,
+    flightDirection: flightDirection,
+    route: route,
   };
 
-  const handleSearch = async () => {
-    try {
-      const data = await getFlights(formData);
-      console.log(data, "response");
-    } catch (error) {
-      console.log(error, "error");
-    }
+  const handleSearch = () => {
+    dispatch(fetchFlights(formData));
+  };
+
+  const handleTabChange = (value) => {
+    dispatch(setFlightType(value));
+  };
+
+  const handleDepartureDateChange = (date) => {
+    dispatch(setDepartureDate(date));
+  };
+
+  const handleReturnDateChange = (date) => {
+    dispatch(setReturnDate(date));
   };
 
   return (
@@ -28,7 +52,12 @@ const SearchFlight = () => {
           <PlaneSvg className="h-6 text-black" />
           <h2 className="font-bold">BOOK YOUR FLIGHT</h2>
         </div>
-        <Tabs defaultValue="round-trip" className="w-[400px]">
+        <Tabs
+          defaultValue="one-way"
+          value={flightType}
+          className="w-[400px]"
+          onValueChange={handleTabChange}
+        >
           <TabsList className="absolute right-4 top-4 rounded-full p-0">
             <TabsTrigger className="h-full rounded-l-full" value="round-trip">
               Round Trip
@@ -51,8 +80,16 @@ const SearchFlight = () => {
               <SearchLocation className="rounded-r-full" variant="arrival" />
             </div>
             <div className="flex items-center justify-between gap-2">
-              <DatePicker className="rounded-l-full" />
-              <DatePicker className="rounded-r-full" />
+              <DatePicker
+                className="rounded-l-full"
+                value={departureDate}
+                onChange={handleDepartureDateChange}
+              />
+              <DatePicker
+                className="rounded-r-full"
+                value={returnDate}
+                onChange={handleReturnDateChange}
+              />
             </div>
           </TabsContent>
           <TabsContent
@@ -69,7 +106,11 @@ const SearchFlight = () => {
               <SearchLocation className="rounded-r-full" variant="arrival" />
             </div>
             <div className="flex items-center justify-start">
-              <DatePicker className="rounded-l-full" />
+              <DatePicker
+                className="rounded-l-full"
+                value={departureDate}
+                onChange={handleDepartureDateChange}
+              />
             </div>
           </TabsContent>
         </Tabs>

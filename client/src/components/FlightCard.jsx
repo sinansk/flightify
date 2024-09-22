@@ -4,23 +4,31 @@ import PlaneSvg from "@/assets/PlaneSvg";
 import { PlaneTakeoffIcon } from "lucide-react";
 import Divider from "./Divider";
 import { PlaneLandingIcon } from "lucide-react";
-
-const FlightCard = () => {
+import { useSelector } from "react-redux";
+import { format } from "date-fns";
+import { formatTime } from "@/utils/formatTime";
+const FlightCard = ({ flightData }) => {
+  const departure = useSelector((state) => state.searchFlight.departure);
+  const arrival = useSelector((state) => state.searchFlight.arrival);
   return (
     <div className="h-50 relative my-5 flex min-w-fit flex-col gap-4 rounded-lg bg-white p-5 shadow-sm sm:w-full">
-      <h3 className="font-bold">Milano-Madrid</h3>
+      <h3 className="font-bold">{`${departure.city} - ${arrival.city}`}</h3>
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">
           <div className="flex gap-2">
             <PlaneTakeoffIcon size={18} />
-            <p>Deperture</p>
+            <p>Departure</p>
           </div>
-          <p className="text-lg font-bold">7.30 AM</p>
-          <p>Airport: MXP</p>
+          <p className="text-lg font-bold">
+            {flightData.scheduleDateTime
+              ? formatTime(flightData?.scheduleDateTime)
+              : "Unknown"}
+          </p>
+          <p>Airport: {departure.iata_code}</p>
         </div>
         <Divider />
         <div className="flex flex-col items-center">
-          <p>Deperture</p>
+          <p>Departure</p>
           <PlaneSvg />
           <p>2h 25m (Nonstop)</p>
         </div>
@@ -30,8 +38,12 @@ const FlightCard = () => {
             <PlaneLandingIcon size={18} />
             <p>Arrival</p>
           </div>
-          <p className="text-lg font-bold">9.55 AM</p>
-          <p>Airport: MAD</p>
+          <p className="text-lg font-bold">
+            {flightData.estimatedLandingTime
+              ? formatTime(flightData.estimatedLandingTime)
+              : "Unknown"}
+          </p>
+          <p>Airport: {arrival.iata_code}</p>
         </div>
       </div>
       <div className="flex items-center justify-between">

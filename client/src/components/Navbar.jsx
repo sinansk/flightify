@@ -9,10 +9,13 @@ import {
   NavigationMenuLink,
 } from "./ui/navigation-menu";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "@/redux/slices/authSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
   return (
     <nav className="ml-auto mr-auto w-[70vw] rounded-t-2xl bg-gray-100 p-4 text-black">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
@@ -27,17 +30,33 @@ const Navbar = () => {
                 Home
               </Link>
             </NavigationMenuItem>
-            <NavigationMenuItem className=" ">
-              <NavigationMenuTrigger>Joane Smith</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <Link to="my-flights" className={navigationMenuTriggerStyle()}>
-                  My Flights
+            {user ? (
+              <NavigationMenuItem className=" ">
+                <NavigationMenuTrigger>
+                  {user?.user?.name}
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <Link
+                    to="my-flights"
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    My Flights
+                  </Link>
+                  <NavigationMenuLink
+                    className={navigationMenuTriggerStyle()}
+                    onClick={() => dispatch(logout())}
+                  >
+                    Logout
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            ) : (
+              <NavigationMenuItem className="">
+                <Link to="/login" className="text-black">
+                  Login
                 </Link>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Logout
-                </NavigationMenuLink>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
+              </NavigationMenuItem>
+            )}
           </NavigationMenuList>
         </NavigationMenu>
       </div>
