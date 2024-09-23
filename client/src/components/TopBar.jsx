@@ -1,12 +1,6 @@
 import React from "react";
 import { Button } from "./ui/button";
-import {
-  ChevronDownIcon,
-  StarFilledIcon,
-  StarIcon,
-} from "@radix-ui/react-icons";
-import { StarOffIcon } from "lucide-react";
-import { StarsIcon } from "lucide-react";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 
 const TopBar = () => {
   const filterOptions = [
@@ -44,8 +38,8 @@ const TopBar = () => {
   ];
 
   return (
-    <div className="grid h-20 w-full grid-cols-2 border-b-2 border-slate-200 bg-white px-5">
-      <div className="flex items-center justify-evenly">
+    <div className="grid h-20 w-full border-b-2 border-slate-200 bg-white px-5 sm:grid-cols-2">
+      <div className="flex flex-wrap items-center justify-evenly">
         {filterOptions.map((item) => (
           <Button key={item?.label} variant="outline">
             {item?.label}
@@ -58,7 +52,7 @@ const TopBar = () => {
 
       <div className="flex items-center justify-center space-x-6 divide-x">
         {ratings.map((item, index) => (
-          <div key={index} className="flex flex-col items-center pl-6">
+          <div key={index} className="flex flex-col items-center sm:pl-6">
             <div className="grid grid-cols-3">
               {item.rating.map((star, starIndex) => (
                 <span key={starIndex} className="">

@@ -8,10 +8,15 @@ import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import { formatTime } from "@/utils/formatTime";
 import { createBooking } from "@/services/bookingService";
+import {
+  selectArrival,
+  selectDeparture,
+  selectFlightType,
+} from "@/redux/slices/searchFlightSlice";
 const FlightCard = ({ flightData }) => {
-  const departure = useSelector((state) => state.searchFlight.departure);
-  const arrival = useSelector((state) => state.searchFlight.arrival);
-  const flightType = useSelector((state) => state.searchFlight.flightType);
+  const departure = useSelector(selectDeparture);
+  const arrival = useSelector(selectArrival);
+  const flightType = useSelector(selectFlightType);
   const userId = useSelector((state) => state.auth?.user?.user.id);
   const token = useSelector((state) => state.auth?.user?.token);
   const date = useSelector(
@@ -35,7 +40,7 @@ const FlightCard = ({ flightData }) => {
   };
 
   return (
-    <div className="h-50 relative my-5 flex min-w-fit flex-col gap-4 rounded-lg bg-white p-5 shadow-sm hover:shadow-lg sm:w-full">
+    <div className="h-50 relative my-5 flex w-full flex-col gap-4 rounded-lg bg-white p-2 shadow-sm hover:shadow-lg sm:w-full sm:min-w-fit sm:p-5">
       <h3 className="font-bold">{`${departure.city} - ${arrival.city}`}</h3>
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">

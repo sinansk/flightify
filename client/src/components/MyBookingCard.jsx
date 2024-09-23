@@ -4,8 +4,16 @@ import { ChevronDownIcon } from "lucide-react";
 import React from "react";
 
 const MyBookingCard = ({ booking }) => {
+  const pricingOptions = [
+    { price: "$156", label: "Main" },
+    { price: "$204", label: "Comfort" },
+    { price: null, label: null, isEmpty: true },
+    { price: "$386", label: "Delta One" },
+    { price: null, label: null, isEmpty: true },
+  ];
+
   return (
-    <div className="grid h-40 w-full grid-cols-2 content-center rounded-lg bg-white p-5 shadow-md">
+    <div className="grid w-full content-center rounded-lg bg-white shadow-md sm:h-40 sm:grid-cols-2 sm:p-5">
       <div className="grid grid-rows-2">
         <div className="flex items-center justify-start">
           <AirlineLogoSvg className="h-20 w-20" />
@@ -40,21 +48,22 @@ const MyBookingCard = ({ booking }) => {
           </div>
         </div>
       </div>
-      <div className="ml-auto mr-5 grid grid-cols-5 items-center gap-2 text-center">
-        <div className="h-24 w-24 content-center border-[0.5px] border-gray-200 shadow-md">
-          <p className="font-bold">$156</p>
-          <p>Main</p>
-        </div>
-        <div className="h-24 w-24 content-center border-[0.5px] border-gray-200 shadow-md">
-          <p className="font-bold">$204</p>
-          <p>Comfort</p>
-        </div>
-        <div className="h-24 w-24 content-center border-[0.5px] border-gray-200 shadow-md"></div>
-        <div className="h-24 w-24 content-center border-[0.5px] border-gray-200 shadow-md">
-          <p className="font-bold">$386</p>
-          <p>Delta One</p>
-        </div>
-        <div className="h-24 w-24 content-center border-[0.5px] border-gray-200 shadow-md"></div>
+      <div className="ml-auto mr-5 grid grid-cols-5 items-center text-center sm:gap-2">
+        {pricingOptions.map(({ price, label, isEmpty }, index) => (
+          <div
+            key={index}
+            className={`grid h-16 w-16 content-center border-[0.5px] border-gray-200 shadow-md sm:h-24 sm:w-24 sm:gap-3 ${
+              isEmpty ? "bg-gray-100" : ""
+            }`}
+          >
+            {!isEmpty ? (
+              <>
+                <p className="font-bold">{price}</p>
+                <p>{label}</p>
+              </>
+            ) : null}
+          </div>
+        ))}
       </div>
     </div>
   );

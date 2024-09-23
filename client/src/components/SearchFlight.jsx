@@ -70,9 +70,9 @@ const SearchFlight = () => {
           </TabsList>
           <TabsContent
             value="Round Trip"
-            className="flex items-center justify-center gap-3"
+            className="flex flex-col items-center justify-center gap-3 sm:mt-3 sm:flex-row"
           >
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-row items-center justify-between gap-2">
               <div className="relative items-center">
                 <SearchLocation
                   className="rounded-l-full"
@@ -96,7 +96,7 @@ const SearchFlight = () => {
           </TabsContent>
           <TabsContent
             value="One Way"
-            className="flex items-center justify-end gap-3 pl-6"
+            className="flex items-center justify-end gap-3"
           >
             <div className="flex items-center justify-between gap-2">
               <div className="relative items-center">
@@ -119,7 +119,7 @@ const SearchFlight = () => {
       </div>
       <Button
         variant="default"
-        className="absolute bottom-5 left-5"
+        className="sm:absolute sm:bottom-5 sm:left-5"
         onClick={handleSearch}
       >
         Show flights

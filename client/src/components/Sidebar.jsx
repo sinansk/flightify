@@ -10,7 +10,7 @@ import {
 
 const SideBar = () => {
   return (
-    <div className="mt-5 flex flex-col items-start gap-6 sm:w-full">
+    <div className="mb-5 mt-5 flex flex-col items-start gap-6 sm:w-full">
       <div className="w-full">
         <h4 className="mb-2 font-semibold">Sort by:</h4>
         <SelectInput options={priceFilterOptions} className="bg-white" />

@@ -3,7 +3,6 @@ const Booking = require("../models/Booking");
 exports.createBooking = async (req, res) => {
   const { flightName, prefixICAO, departure, arrival, date } = req.body;
   const userId = req.user._id;
-  console.log(req, "req backed");
   try {
     const booking = await Booking.create({
       user: userId,

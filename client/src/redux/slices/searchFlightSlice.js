@@ -86,4 +86,11 @@ export const {
   setDepartureDate,
   setReturnDate,
 } = searchFlightSlice.actions;
+
+export const selectFlightType = (state) => state.searchFlight.flightType;
+export const selectDeparture = (state) => state.searchFlight.departure;
+export const selectArrival = (state) => state.searchFlight.arrival;
+export const selectFlightDirection = (state) =>
+  state.searchFlight.flightDirection;
+export const selectRoute = (state) => state.searchFlight.route;
 export default searchFlightSlice.reducer;

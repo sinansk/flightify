@@ -7,7 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-400 via-violet-500 to-indigo-600 p-5">
+    <div className="min-w-screen min-h-screen overflow-y-hidden bg-gradient-to-b from-purple-400 via-violet-500 to-indigo-600 p-2 sm:p-5">
       <Router>
         <Navbar />
         <Routes>

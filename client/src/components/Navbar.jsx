@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -11,10 +11,9 @@ import {
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/authSlice";
-import { EarIcon, EarthIcon, HomeIcon, LogInIcon, TagIcon } from "lucide-react";
-
+import { EarthIcon, HomeIcon, LogInIcon, TagIcon } from "lucide-react";
+import AirPlane from "../assets/airplane.png";
 const Navbar = () => {
-  const navigate = useNavigate();
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
@@ -36,12 +35,14 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="ml-auto mr-auto w-[70vw] rounded-t-2xl bg-gray-100 p-4 text-black">
+    <nav className="w-full rounded-t-2xl bg-gray-100 p-4 text-black sm:mx-auto sm:w-[70vw]">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        {/* Logo */}
-        <h1 className="text-xl font-bold">
-          <Link to="/">Plane Scape</Link>
-        </h1>
+        <div className="flex items-center gap-2">
+          <img src={AirPlane} className="h-10 w-10" />
+          <h1 className="hidden text-xl font-bold sm:block">
+            <Link to="/">PLANE SCOPE</Link>
+          </h1>
+        </div>
         <NavigationMenu onValueChange={onNavChange}>
           <NavigationMenuList className="flex space-x-6">
             <NavigationMenuItem className="hover:text-gray-500">
@@ -59,11 +60,11 @@ const Navbar = () => {
               <span>Discover</span>
             </NavigationMenuItem>
             {user ? (
-              <NavigationMenuItem className=" ">
+              <NavigationMenuItem>
                 <NavigationMenuTrigger className="submenu-trigger">
                   {user?.user?.name}
                 </NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="cursor-pointer">
                   <Link
                     to="my-bookings"
                     className={navigationMenuTriggerStyle()}

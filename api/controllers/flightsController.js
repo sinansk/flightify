@@ -2,7 +2,7 @@ const axios = require("axios");
 
 exports.getFlights = async (req, res) => {
   const { scheduleDate, flightDirection, route } = req.body;
-  console.log(route, "route");
+
   try {
     const response = await axios.get(
       "https://api.schiphol.nl/public-flights/flights",

@@ -8,7 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useSelector, useDispatch } from "react-redux";
-import { setDeparture, setArrival } from "../redux/slices/searchFlightSlice"; // Redux actions
+import { setDeparture, setArrival } from "../redux/slices/searchFlightSlice";
 import {
   Popover,
   PopoverContent,
@@ -89,7 +89,7 @@ const SearchLocation = ({ className, variant }) => {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("relative w-[200px] justify-between", className)}
+          className={cn("relative w-28 w-[200px] justify-between", className)}
         >
           {selectedAirport ? (
             <span className="ml-4">{selectedAirport.name}</span>
