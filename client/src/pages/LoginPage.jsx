@@ -17,13 +17,11 @@ const LoginPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(formData, "form");
     e.preventDefault();
     try {
       const data = await login(formData);
       dispatch(setUser(data));
       navigate("/", { replace: true });
-      console.log("User logined:", data);
     } catch (error) {
       console.error("Error during registration:", error);
     }

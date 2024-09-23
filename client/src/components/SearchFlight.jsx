@@ -4,7 +4,6 @@ import SearchLocation from "./SearchLocation";
 import DatePicker from "./DatePicker";
 import { Button } from "./ui/button";
 import PlaneSvg from "@/assets/PlaneSvg";
-import { getFlights } from "@/services/flightsService";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setDepartureDate,
@@ -12,13 +11,16 @@ import {
   setReturnDate,
 } from "@/redux/slices/searchFlightSlice";
 import { fetchFlights } from "../redux/thunks/searchFlightThunks";
+
 const SearchFlight = () => {
   const dispatch = useDispatch();
   const flightType = useSelector((state) => state.searchFlight.flightType);
   const departureDate = useSelector(
-    (state) => state.searchFlight.departureDate,
+    (state) => state.searchFlight.departure?.departureDate,
   );
-  const returnDate = useSelector((state) => state.searchFlight.returnDate);
+  const returnDate = useSelector(
+    (state) => state.searchFlight.arrival?.returnDate,
+  );
   const flightDirection = useSelector(
     (state) => state.searchFlight.flightDirection,
   );
@@ -53,21 +55,21 @@ const SearchFlight = () => {
           <h2 className="font-bold">BOOK YOUR FLIGHT</h2>
         </div>
         <Tabs
-          defaultValue="one-way"
+          defaultValue="One Way"
           value={flightType}
           className="w-[400px]"
           onValueChange={handleTabChange}
         >
           <TabsList className="absolute right-4 top-4 rounded-full p-0">
-            <TabsTrigger className="h-full rounded-l-full" value="round-trip">
+            <TabsTrigger className="h-full rounded-l-full" value="Round Trip">
               Round Trip
             </TabsTrigger>
-            <TabsTrigger className="h-full rounded-r-full" value="one-way">
+            <TabsTrigger className="h-full rounded-r-full" value="One Way">
               One Way
             </TabsTrigger>
           </TabsList>
           <TabsContent
-            value="round-trip"
+            value="Round Trip"
             className="flex items-center justify-center gap-3"
           >
             <div className="flex items-center justify-between gap-2">
@@ -93,7 +95,7 @@ const SearchFlight = () => {
             </div>
           </TabsContent>
           <TabsContent
-            value="one-way"
+            value="One Way"
             className="flex items-center justify-end gap-3 pl-6"
           >
             <div className="flex items-center justify-between gap-2">

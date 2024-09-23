@@ -6,17 +6,17 @@ const initialState = {
     name: "Sabiha Gokcen",
     iata_code: "SAW",
     city: "Istanbul",
+    departureDate: null,
   },
   arrival: {
     name: "Amsterdam Schiphol",
     iata_code: "AMS",
     city: "Amsterdam",
+    returnDate: null,
   },
-  flightType: "one-way",
+  flightType: "One Way",
   flightDirection: "A",
   route: "IST",
-  departureDate: null,
-  returnDate: null,
   flights: [],
   status: "idle",
   error: null,
@@ -52,15 +52,15 @@ const searchFlightSlice = createSlice({
     },
     setFlightType: (state, action) => {
       state.flightType = action.payload;
-      if (action.payload === "one-way") {
+      if (action.payload === "One Way") {
         state.returnDate = null;
       }
     },
     setDepartureDate: (state, action) => {
-      state.departureDate = format(action.payload, "yyyy-MM-dd");
+      state.departure.departureDate = format(action.payload, "yyyy-MM-dd");
     },
     setReturnDate: (state, action) => {
-      state.returnDate = action.payload;
+      state.arrival.returnDate = action.payload;
     },
   },
   extraReducers: (builder) => {

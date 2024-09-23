@@ -7,11 +7,35 @@ import { PlaneLandingIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import { formatTime } from "@/utils/formatTime";
+import { createBooking } from "@/services/bookingService";
 const FlightCard = ({ flightData }) => {
   const departure = useSelector((state) => state.searchFlight.departure);
   const arrival = useSelector((state) => state.searchFlight.arrival);
+  const flightType = useSelector((state) => state.searchFlight.flightType);
+  const userId = useSelector((state) => state.auth?.user?.user.id);
+  const token = useSelector((state) => state.auth?.user?.token);
+  const date = useSelector(
+    (state) => state.searchFlight.departure?.departureDate,
+  );
+
+  const bookingData = {
+    user: userId,
+    flightName: flightData?.flightName,
+    prefixICAO: flightData.prefixICAO ? flightData.prefixICAO : "",
+    departure: { departureTime: flightData?.scheduleDateTime, ...departure },
+    arrival: { arrivalTime: flightData?.estimatedLandingTime, ...arrival },
+    date,
+  };
+  const handleBooking = async () => {
+    try {
+      const data = await createBooking(bookingData, token);
+    } catch (error) {
+      console.log(error, "error");
+    }
+  };
+
   return (
-    <div className="h-50 relative my-5 flex min-w-fit flex-col gap-4 rounded-lg bg-white p-5 shadow-sm sm:w-full">
+    <div className="h-50 relative my-5 flex min-w-fit flex-col gap-4 rounded-lg bg-white p-5 shadow-sm hover:shadow-lg sm:w-full">
       <h3 className="font-bold">{`${departure.city} - ${arrival.city}`}</h3>
       <div className="flex items-center justify-between">
         <div className="flex flex-col items-start">
@@ -28,9 +52,9 @@ const FlightCard = ({ flightData }) => {
         </div>
         <Divider />
         <div className="flex flex-col items-center">
-          <p>Departure</p>
+          <p className="font-semibold">{flightData?.prefixICAO}</p>
           <PlaneSvg />
-          <p>2h 25m (Nonstop)</p>
+          <p>{flightData?.flightName}</p>
         </div>
         <Divider />
         <div className="flex flex-col items-start">
@@ -49,9 +73,10 @@ const FlightCard = ({ flightData }) => {
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <p className="font-bold text-violet-900">Price: $200</p>
-          <p className="text-sm font-semibold">Round Trip</p>
+          <p className="text-sm font-semibold">{flightType}</p>
         </div>
         <Button
+          onClick={handleBooking}
           variant="default"
           size="lg"
           className="absolute bottom-0 right-0 h-16 rounded-none rounded-br-lg rounded-tl-lg"

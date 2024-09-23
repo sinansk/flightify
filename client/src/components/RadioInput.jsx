@@ -2,7 +2,6 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export const RadioInput = ({ options }) => {
-  console.log(options, "options");
   return (
     <RadioGroup defaultValue={options[0]?.option}>
       {options.map((option) => (

@@ -16,7 +16,6 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const data = await register(formData);
-      console.log("User registered:", data);
     } catch (error) {
       console.error("Error during registration:", error);
     }
