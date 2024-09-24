@@ -57,7 +57,7 @@ const SearchFlight = () => {
         <Tabs
           defaultValue="One Way"
           value={flightType}
-          className="w-[400px]"
+          className="sm:w-[400px]"
           onValueChange={handleTabChange}
         >
           <TabsList className="absolute right-4 top-4 rounded-full p-0">
@@ -72,7 +72,7 @@ const SearchFlight = () => {
             value="Round Trip"
             className="flex flex-col items-center justify-center gap-3 sm:mt-3 sm:flex-row"
           >
-            <div className="flex flex-row items-center justify-between gap-2">
+            <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
               <div className="relative items-center">
                 <SearchLocation
                   className="rounded-l-full"
@@ -81,7 +81,7 @@ const SearchFlight = () => {
               </div>
               <SearchLocation className="rounded-r-full" variant="arrival" />
             </div>
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
               <DatePicker
                 className="rounded-l-full"
                 value={departureDate}
@@ -96,9 +96,9 @@ const SearchFlight = () => {
           </TabsContent>
           <TabsContent
             value="One Way"
-            className="flex items-center justify-end gap-3"
+            className="flex flex-col items-center justify-end gap-3 sm:flex-row"
           >
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
               <div className="relative items-center">
                 <SearchLocation
                   className="rounded-l-full"

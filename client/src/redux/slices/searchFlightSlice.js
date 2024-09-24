@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchFlights } from "../thunks/searchFlightThunks";
 import { format } from "date-fns";
+
+const today = format(new Date(), "yyyy-MM-dd");
 const initialState = {
   departure: {
     name: "Sabiha Gokcen",
     iata_code: "SAW",
     city: "Istanbul",
-    departureDate: null,
+    departureDate: today,
   },
   arrival: {
     name: "Amsterdam Schiphol",

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/authSlice";
 import { EarthIcon, HomeIcon, LogInIcon, TagIcon } from "lucide-react";
 import AirPlane from "../assets/airplane.png";
+import { createModal } from "@/utils/modalHooks";
 const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
@@ -73,7 +74,14 @@ const Navbar = () => {
                   </Link>
                   <NavigationMenuLink
                     className={navigationMenuTriggerStyle()}
-                    onClick={() => dispatch(logout())}
+                    // onClick={() => dispatch(logout())}
+                    onClick={() =>
+                      createModal("ConfirmationModal", {
+                        title: "Are you sure ?",
+                        text: "Do you want to logout?",
+                        onConfirm: () => dispatch(logout()),
+                      })
+                    }
                   >
                     Logout
                   </NavigationMenuLink>

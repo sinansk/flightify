@@ -5,40 +5,43 @@ import { PlaneTakeoffIcon } from "lucide-react";
 import Divider from "./Divider";
 import { PlaneLandingIcon } from "lucide-react";
 import { useSelector } from "react-redux";
-import { format } from "date-fns";
 import { formatTime } from "@/utils/formatTime";
-import { createBooking } from "@/services/bookingService";
 import {
   selectArrival,
   selectDeparture,
   selectFlightType,
 } from "@/redux/slices/searchFlightSlice";
+import { createModal } from "@/utils/modalHooks";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "./ui/toast";
+import { useNavigate } from "react-router-dom";
+
 const FlightCard = ({ flightData }) => {
   const departure = useSelector(selectDeparture);
   const arrival = useSelector(selectArrival);
   const flightType = useSelector(selectFlightType);
   const userId = useSelector((state) => state.auth?.user?.user.id);
-  const token = useSelector((state) => state.auth?.user?.token);
-  const date = useSelector(
-    (state) => state.searchFlight.departure?.departureDate,
-  );
-
-  const bookingData = {
-    user: userId,
-    flightName: flightData?.flightName,
-    prefixICAO: flightData.prefixICAO ? flightData.prefixICAO : "",
-    departure: { departureTime: flightData?.scheduleDateTime, ...departure },
-    arrival: { arrivalTime: flightData?.estimatedLandingTime, ...arrival },
-    date,
-  };
-  const handleBooking = async () => {
-    try {
-      const data = await createBooking(bookingData, token);
-    } catch (error) {
-      console.log(error, "error");
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const handleBookClick = () => {
+    if (!userId) {
+      toast({
+        variant: "destructive",
+        title: "Not authenticated!",
+        description: "You have to login for booking.",
+        action: (
+          <ToastAction
+            onClick={() => navigate("/login", { replace: true })}
+            altText="Login"
+          >
+            Login
+          </ToastAction>
+        ),
+      });
+    } else {
+      createModal("BookingModal", { flightData: flightData, text: "text" });
     }
   };
-
   return (
     <div className="h-50 relative my-5 flex w-full flex-col gap-4 rounded-lg bg-white p-2 shadow-sm hover:shadow-lg sm:w-full sm:min-w-fit sm:p-5">
       <h3 className="font-bold">{`${departure.city} - ${arrival.city}`}</h3>
@@ -81,7 +84,7 @@ const FlightCard = ({ flightData }) => {
           <p className="text-sm font-semibold">{flightType}</p>
         </div>
         <Button
-          onClick={handleBooking}
+          onClick={handleBookClick}
           variant="default"
           size="lg"
           className="absolute bottom-0 right-0 h-16 rounded-none rounded-br-lg rounded-tl-lg"

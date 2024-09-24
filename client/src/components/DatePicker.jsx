@@ -13,6 +13,8 @@ import {
 import { useState } from "react";
 
 const DatePicker = ({ value, onChange, className }) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
   const [date, setDate] = useState();
   const handleDate = (date) => {
     setDate(date);
@@ -39,6 +41,11 @@ const DatePicker = ({ value, onChange, className }) => {
           selected={date}
           onSelect={handleDate}
           initialFocus
+          disabled={(date) => {
+            const compareDate = new Date(date);
+            compareDate.setHours(0, 0, 0, 0);
+            return compareDate < today;
+          }}
         />
       </PopoverContent>
     </Popover>
