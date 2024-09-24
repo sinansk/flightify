@@ -1,6 +1,6 @@
-# Bodygoal
+# Flightify
 
-## [ON LIVE](https://bodygoalapp.netlify.app/)  
+  
 - It is a Flight Booking app that you can search and booking for flights based on locations and date.  
 - User can continue to use app after refreshing page.  
 - Location options are coming from [here](https://raw.githubusercontent.com/algolia/datasets/master/airports/airports.json), because [Schiphol Api](https://developer.schiphol.nl/apis/flight-api/v4) provides only airport codes.
